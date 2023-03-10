@@ -21,4 +21,14 @@ def trade(execute, capital, positions):
             positions.pop()
             capital += e.qty*e.price
 
+        #shorting
+        elif e.buy and e.trade_type == False:
+            positions.pop()
+            capital -= e.qty*e.price
+
+        elif e.sell and e.trade_type == False:
+            new_pos = position(e.ticker, e.qty, e.price, e.trade_type)
+            positions.append(new_pos)
+            capital += e.qty*e.price
+
     return capital, positions

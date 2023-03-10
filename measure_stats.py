@@ -76,6 +76,8 @@ with open('writing/actions' + ticker + '.csv', mode='r') as file:
                     loss_making_trades.append(trade_profit)
                     
                 position_ticker.pop(ticker)
+            else:
+                position_ticker[ticker] = trade
 
 
 ##calculating all stats:
@@ -103,7 +105,10 @@ final_val = capital
 equity = 0
 
 for i in position_ticker:
-    equity += position_ticker[i].total_val
+    if position_ticker[i][-1] == 'True':
+        equity += float(position_ticker[i][5])
+    else:
+        equity -= float(position_ticker[i][5])
 
 final_val += equity
 final_profit = final_val - icap
@@ -122,6 +127,7 @@ ror = total_loss_profit_perc/no_total_trades #what is ror
 
 # cagr = ((math.pow(((final_val)/icap),365/total_days)) - 1)*100
 cagr = (final_val/icap)*100
+cagr = (math.pow((final_val/icap), (365/total_days)) - 1)*100
 print(final_val)
 risk_reward_ratio = total_profits/total_loss
 

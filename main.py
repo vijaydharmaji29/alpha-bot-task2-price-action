@@ -29,7 +29,6 @@ def run():
             all_actions.extend(execute)
             capital, positions = executioner.trade(execute, capital, positions)
 
-    print(capital/icap)
     print(positions)
 
     return all_actions

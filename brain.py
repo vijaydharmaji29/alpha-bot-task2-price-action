@@ -11,8 +11,7 @@ class action(object):
 def calculate(session_data, positions, capital): #list of all active positions, length should be one or zero   
     execute = []
     slrl_limit = 20
-
-    #squaring off at the end of the day - intraday - makes it worseoff though
+    
     if session_data.time == '15:29:00' and len(positions) > 0:
         if positions[0].trade_type == True: #if i am on a long position, squaring the long position off by selling
             new_action = action(session_data.symbol, positions[0].qty, False, True, session_data.close, session_data.datetime, True)
@@ -23,9 +22,14 @@ def calculate(session_data, positions, capital): #list of all active positions, 
 
         return execute
 
-    buy_signal = (session_data.close > session_data.filt) and (session_data.supports - slrl_limit < session_data.close) and (session_data.supports + slrl_limit > session_data.close)
-    sell_signal = (session_data.close < session_data.filt) and (session_data.direction == -1) and (session_data.resistances - slrl_limit < session_data.close) and (session_data.resistances + slrl_limit > session_data.close)
+        
+
+    # buy_signal = (session_data.close > session_data.filt) and (session_data.supports - slrl_limit < session_data.close) and (session_data.supports + slrl_limit > session_data.close)
+    # sell_signal = (session_data.close < session_data.filt) and (session_data.direction == -1) and (session_data.resistances - slrl_limit < session_data.close) and (session_data.resistances + slrl_limit > session_data.close)
     
+    buy_signal = (session_data.close > session_data.filt) and (session_data.direction == 1)
+    sell_signal = (session_data.close < session_data.filt) and (session_data.direction == -1)
+
     #longing stocks
     if buy_signal and len(positions) == 0:
         qty = int(capital/session_data.close)
