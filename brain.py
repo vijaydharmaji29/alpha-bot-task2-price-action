@@ -18,12 +18,12 @@ def calculate(session_data, positions, capital): #list of all active positions, 
     #longing stocks
     if buy_signal and len(positions) == 0:
         qty = int(capital/session_data.close)
-        new_action = action(session_data.symbol, qty, True, False, session_data.close, session_data.date, True)
+        new_action = action(session_data.symbol, qty, True, False, session_data.close, session_data.datetime, True)
         execute.append(new_action)
     
     elif sell_signal and (len(positions) == 1):
         qty = positions[0].qty
-        new_action = action(session_data.symbol, qty, False, True, session_data.close, session_data.date, True)
+        new_action = action(session_data.symbol, qty, False, True, session_data.close, session_data.datetime, True)
         execute.append(new_action)
     
     return execute

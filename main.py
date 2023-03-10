@@ -9,7 +9,7 @@ ticker = 'RELIANCE'
 
 def run():
     global icap
-    capital = 100000000
+    capital = icap
     positions = []
     all_actions = []
 
