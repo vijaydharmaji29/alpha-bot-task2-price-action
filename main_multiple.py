@@ -1,21 +1,29 @@
-import data_giver as dg
+# import data_giver_multiple as dg
 import pandas as pd
 import brain
 import executioner
 import csv
+import os
 
 icap = 100000000
-ticker = 'BHARTIARTL'
 
-def run():
+def run(ticker):
     global icap
     capital = icap
     positions = []
     all_actions = []
 
     index = 0
-    while True:
-        next = dg.next(index) #getting data for next trading session
+    data = pd.read_csv('df_csv/data' + ticker + '.csv')
+
+    while index < len(data):
+        # next, data = dg.next(ticker, index) #getting data for next trading session
+        
+        if index >= len(data):
+            next = None
+        
+        next = data.iloc[index]
+
         index += 1
 
         #checking if valid trading session
@@ -28,12 +36,13 @@ def run():
         if len(execute) > 0:
             all_actions.extend(execute)
             capital, positions = executioner.trade(execute, capital, positions)
+            # print(positions)
 
-    print(positions)
+    print(capital)
 
     return all_actions
 
-def write_actions(all_actions):
+def write_actions(ticker, all_actions):
     fields = ['Ticker', 'Date', 'Action', 'Quantity', 'Price', 'Total Value', 'Capital Left', 'Trade Type']
     all_actions_list = []
     capital_left = icap
@@ -119,6 +128,11 @@ def write_actions(all_actions):
 
 
 if __name__ == '__main__':
-    all_actions = run()
-    write_actions(all_actions)
-    print('DONE')
+    files = os.listdir('df_csv/')
+    for f in files:
+        t = f[4:-4]
+        print('WRITING -', t)
+        icap = 100000000
+        all_actions = run(t)
+        write_actions(t, all_actions)
+        print('DONE -', t)

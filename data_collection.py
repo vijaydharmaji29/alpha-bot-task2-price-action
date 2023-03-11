@@ -3,6 +3,8 @@ import math
 import numpy as np
 import pandas_ta as ta
 from datetime import datetime
+import csv
+import os
 
 pd.set_option('display.max_columns', None)
 
@@ -63,7 +65,7 @@ def calculate_pivot(df):
             if df.iloc[j]['close'] > max:
                 max = df.iloc[j]['close']
             
-        print(len(df), i)
+        # print(len(df), i)
         
         resitances.append(max)
         supports.append(min)
@@ -125,8 +127,31 @@ def get_data(ticker):
 
 
 if __name__ == '__main__':
-    ticker = 'RELIANCE'
-    df = get_data(ticker)
-    df.to_csv('df_csv/' + 'data' + ticker + '.csv')
-    print(df.tail(5))
-    # print(df.iloc[500:1000])
+    files = os.listdir('data_reduced/')
+    files.remove('.DS_Store')
+    ctr = 1
+
+    print(files)
+    for f in files:
+        ticker = f[:-4]
+        print('CONVERTING -', ticker, ' -', ctr, ' OF', len(files))
+        df = get_data(ticker)
+        df.to_csv('df_csv/' + 'data' + ticker + '.csv')
+
+        lines = []
+        with open('df_csv/' + 'data' + ticker + '.csv') as file:
+            reader = csv.reader(file)
+            for row in reader:
+                lines.append(row)
+
+        new_line = lines[-1]
+        new_line[8] = '15:29:00'
+        lines.append(new_line)
+
+        with open('df_csv/' + 'data' + ticker + '.csv', 'w') as file:
+            writer = csv.writer(file)
+            writer.writerows(lines)
+
+        ctr += 1
+        
+    #     # print(df.iloc[500:1000])

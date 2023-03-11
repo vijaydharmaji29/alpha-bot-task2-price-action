@@ -2,7 +2,7 @@ import csv
 from datetime import datetime 
 import math
 
-capital = 100000000
+capital = 10000000
 icap = capital
 
 
@@ -16,7 +16,7 @@ start_date = datetime.today()
 end_date = datetime.today()
 
 # opening the CSV file
-ticker = 'RELIANCE'
+ticker = 'BHARTIARTL'
 with open('writing/actions' + ticker + '.csv', mode='r') as file:
     # reading the CSV file
     csvFile = csv.reader(file)
@@ -127,7 +127,7 @@ ror = total_loss_profit_perc/no_total_trades #what is ror
 
 # cagr = ((math.pow(((final_val)/icap),365/total_days)) - 1)*100
 cagr = (final_val/icap)*100
-cagr = (math.pow((final_val/icap), (365/total_days)) - 1)*100
+# cagr = (math.pow((final_val/icap), (365/total_days)) - 1)*100
 print(final_val)
 risk_reward_ratio = total_profits/total_loss
 

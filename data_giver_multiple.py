@@ -4,18 +4,18 @@ import pandas as pd
 import data_collection as dc
 
 # tickers = os.listdir('big_data/')
-ticker = 'BHARTIARTL'
 print('GETTING STOCK DATA')
 
 #getting data for all stocks in the timeframe
 # stock_data = dc.get_data(ticker)
-stock_data = pd.read_csv('df_csv/dataBHARTIARTL.csv') #getting data directly from stored data
 
-def next(index):
+def next(ticker, index):
+    stock_data = pd.read_csv('df_csv/data' + ticker + '.csv') #getting data directly from stored data
+
     if index >= len(stock_data):
         return None
 
-    return stock_data.iloc[index]
+    return stock_data.iloc[index], data
 
 if __name__ == '__main__':
     print('STARTING')
