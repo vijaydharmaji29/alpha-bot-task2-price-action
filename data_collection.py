@@ -119,6 +119,7 @@ def create_data(df):
 def get_data(ticker):
     df = pd.read_csv('data_reduced/' + ticker + '.csv')
     df = create_data(df)
+    #adding last row for squaring off positions
 
     return df
 
@@ -127,5 +128,5 @@ if __name__ == '__main__':
     ticker = 'RELIANCE'
     df = get_data(ticker)
     df.to_csv('df_csv/' + 'data' + ticker + '.csv')
-    print(df.head(20))
+    print(df.tail(5))
     # print(df.iloc[500:1000])

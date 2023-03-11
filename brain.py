@@ -24,11 +24,11 @@ def calculate(session_data, positions, capital): #list of all active positions, 
 
         
 
-    # buy_signal = (session_data.close > session_data.filt) and (session_data.supports - slrl_limit < session_data.close) and (session_data.supports + slrl_limit > session_data.close)
-    # sell_signal = (session_data.close < session_data.filt) and (session_data.direction == -1) and (session_data.resistances - slrl_limit < session_data.close) and (session_data.resistances + slrl_limit > session_data.close)
+    sell_signal = (session_data.close > session_data.filt) and (session_data.supports - slrl_limit < session_data.close) and (session_data.supports + slrl_limit > session_data.close)
+    buy_signal = (session_data.close < session_data.filt) and (session_data.direction == -1) and (session_data.resistances - slrl_limit < session_data.close) and (session_data.resistances + slrl_limit > session_data.close)
     
-    buy_signal = (session_data.close > session_data.filt) and (session_data.direction == 1)
-    sell_signal = (session_data.close < session_data.filt) and (session_data.direction == -1)
+    # buy_signal = (session_data.close > session_data.filt) and (session_data.direction == 1)
+    # sell_signal = (session_data.close < session_data.filt) and (session_data.direction == -1)
 
     #longing stocks
     if buy_signal and len(positions) == 0:

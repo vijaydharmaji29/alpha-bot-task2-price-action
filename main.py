@@ -90,10 +90,10 @@ def write_actions(all_actions):
             else:
                 capital_left -= qty*exitprice
 
-            if profit > 0:
-                outcome = 'BULLISH'
+            if a.trade_type:
+                outcome = 'LONG'
             else:
-                outcome = 'BEARISH'
+                outcome = 'SHORT'
 
             new_row = (date, outcome, timeofentry, optionticker, entryprice, exitprice, timeofexit, qty, SL, profit, total_pnl, capital_left)
             all_actions_refined.append(new_row)
